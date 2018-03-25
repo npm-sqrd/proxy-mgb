@@ -1,22 +1,20 @@
-const express = require('express');
-const parser = require('body-parser');
-const _ =require('underscore');
-const fs = require('file-system');
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const React = require('react');
+const ReactDOM = require('react-dom/server');
 
-const app = express();
-
-app.use(parser.json());
-
-app.use(express.static(__dirname  + '/dist'));
-app.get('/:id', (req, res) => {
-  fs.readFile(__dirname + '/dist/template.html', 'utf8', function (err, html) {
-    var template = _.template(html);
-    var result = template({ id: req.params.id }); 
-    res.send(result);
+const render = (components, props = {}) => {
+  return Object.keys(components).map(item => {
+    let component = React.createElement(components[item], props);
+    return ReactDOM.renderToString(component);
   });
-})
-const port = process.env.PORT || 5005;
+}
 
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+
+http.createServer((req, res) => {
+  const { method, url } = req;
+  if (method === 'GET' && url === '/') {
+    // do something
+  }
+}).listen(5000);
