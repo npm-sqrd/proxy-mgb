@@ -1,3 +1,5 @@
 node_modules/
 client-components/
 server/dist/bundles/
+newrelic.js
+newrelic_agent.log
