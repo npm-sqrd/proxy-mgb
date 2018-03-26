@@ -2,8 +2,8 @@
   "Reservations":
   {
     "appName": "Reservation",
-    "clientBundle": "bundle.js",
-    "serverBundle": "bundle-server.js",
+    "clientBundle": "res-bundle.js",
+    "serverBundle": "res-bundle-server.js",
     "url": "http://localhost:3005"
   }
 }
