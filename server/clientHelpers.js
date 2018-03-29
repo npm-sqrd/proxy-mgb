@@ -2,7 +2,7 @@ const axios = require('axios');
 const redisClient = require('./redisClient');
 
 const postData = ((res, req, route) => {
-  axios.post(`http://localhost:3005${route}`, req)
+  axios.post(`http://localhost:8080${route}`, req)
     .then(({ data }) => {
       const dataStr = JSON.stringify(data);
       redisClient.del(route);
@@ -22,7 +22,7 @@ const fetchData = ((res, route) => {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(result);
     } else {
-      axios.get(`http://localhost:3005${route}`)
+      axios.get(`http://localhost:8080${route}`)
         .then(({ data }) => {
           const dataStr = JSON.stringify(data);
           redisClient.setex(route, 10, dataStr);
@@ -43,7 +43,7 @@ const getBundle = ((res, route) => {
       res.writeHead(200, { 'Content-Type': 'text/javascript' });
       res.end(JSON.parse(result));
     } else {
-      axios.get(`http://localhost:3005${route}`)
+      axios.get(`http://localhost:8080${route}`)
         .then(({ data }) => {
           const dataStr = JSON.stringify(data);
           redisClient.setex(route, 300, dataStr);

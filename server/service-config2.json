@@ -4,6 +4,6 @@
     "appName": "Reservation",
     "clientBundle": "res-bundle.js",
     "serverBundle": "res-bundle-server.js",
-    "url": "http://localhost:8080"
+    "url": "http://localhost:3005"
   }
 }

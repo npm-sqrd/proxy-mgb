@@ -4,23 +4,26 @@ const path = require('path');
 const components = require('./service-config.json');
 
 const bundles = [];
-const fetchBundles = () => {
+const fetchBundles = (type) => {
   Object.keys(components).forEach((elem) => {
-    const url = `${components[elem].url}/${components[elem].serverBundle}`;
-    const bundle = components[elem].serverBundle;
+    const url = type === 'server' ? `${components[elem].url}/${components[elem].serverBundle}` : `${components[elem].url}/${components[elem].clientBundle}`;
+    const bundle = type === 'server' ? components[elem].serverBundle : components[elem].clientBundle;
     const request = {
       method: 'GET',
       url,
       responseType: 'stream',
     };
     axios(request).then((res) => {
-      res.data.pipe(fs.createWriteStream(path.join(__dirname, `/dist/bundles/${bundle}`))).on('finish', () => {
-        bundles.push(require(`./dist/bundles/${bundle}`).default);
+      res.data.pipe(fs.createWriteStream(path.join(__dirname, `/dist/${type}-bundles/${bundle}`))).on('finish', () => {
+        if (type === 'server') {
+          bundles.push(require(`./dist/${type}-bundles/${bundle}`).default);
+        }
       });
     }).catch(err => console.error(err));
   });
 };
 
-fetchBundles();
+fetchBundles('server');
+fetchBundles('client');
 
 module.exports = bundles;

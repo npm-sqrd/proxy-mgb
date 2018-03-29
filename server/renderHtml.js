@@ -7,7 +7,7 @@ const renderComponents = (response, bundle) => {
   const compStr = ReactDOM.renderToString(comp);
   response.statusCode = 200;
   response.end(createSkeleton(
-    createBody('ABOUT', compStr, 'MENU', 'REVIEWS'),
+    createBody('About', compStr, 'Menu', 'Reviews'),
     hydrateComps('', 'Reservation', '', ''),
   ));
 };
