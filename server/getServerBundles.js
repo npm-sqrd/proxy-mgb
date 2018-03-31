@@ -1,7 +1,7 @@
 const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
-const components = require('./service-config2.json');
+const components = require('./service-config.json');
 
 const bundles = [];
 const fetchBundles = (type) => {

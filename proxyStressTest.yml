@@ -1,11 +1,11 @@
 config:
- target: 'http://localhost:5000'
+ target: 'http://ec2-18-188-76-143.us-east-2.compute.amazonaws.com'
  phases:
-   - duration: 60
+   - duration: 300
      arrivalRate: 5
 scenarios:
  - flow:
    - loop:
      - get:
-         url: "/restaurants/1500000/reservations/2018-03-26"
+         url: "/"
      count: 225

@@ -1,13 +1,15 @@
 const axios = require('axios');
 const redisClient = require('./redisClient');
-const service = require('./service-config2.json');
+const service = require('./service-config.json');
 
 const postData = ((res, req, route) => {
   axios.post(`${service.Reservations.url}${route}`, req)
     .then(({ data }) => {
+      console.log('route1', route);
+      console.log(data);
       const dataStr = JSON.stringify(data);
-      redisClient.del(route);
-      redisClient.setex(route, 10, dataStr);
+      // redisClient.del(route);
+      redisClient.setex(route, 180, dataStr);
       res.writeHead(201, { 'Content-Type': 'application/json' });
       res.end(dataStr);
     })
@@ -20,13 +22,16 @@ const postData = ((res, req, route) => {
 const fetchData = ((res, route) => {
   redisClient.get(route, (err, result) => {
     if (result != null) {
+      console.log('route2', route);
+      console.log('grabbing from redis');
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(result);
     } else {
       axios.get(`${service.Reservations.url}${route}`)
         .then(({ data }) => {
+          console.log('fetching from the service');
           const dataStr = JSON.stringify(data);
-          redisClient.setex(route, 10, dataStr);
+          redisClient.setex(route, 180, dataStr);
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(dataStr);
         })

@@ -26,7 +26,7 @@ const hydrateComps = (about, reservation, menu, review) => `
   <script src='res-bundle.js'></script>
   <script>
 ReactDOM.hydrate(
-  React.createElement(${reservation}, { id: 800 }),
+  React.createElement(${reservation}, { name: "restaurant10800000" }),
   document.getElementById('reservation')
 );
   </script>

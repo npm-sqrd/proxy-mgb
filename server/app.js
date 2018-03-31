@@ -10,25 +10,6 @@ const path = require('path');
 //   global.window = {};
 // }
 
-// this function re-maps the native console log and warn to print
-// additional information about which file and line they come from
-
-// ['log'].forEach((method) => {
-//   const old = console[method];
-//   console[method] = () => {
-//     let stack = (new Error()).stack.split(/\n/);
-//     // Chrome includes a single "Error" line, FF doesn't.
-//     if (stack[0].indexOf('Error') === 0) {
-//       stack = stack.slice(1);
-//     }
-//     const short = `======> ${stack[1].split('/').slice(-1)}`;
-//     const args = [].slice.apply(arguments).concat(short);
-//     return old.apply(console, args);
-//   };
-// });
-
-// start of server
-
 const app = http.createServer((req, res) => {
   const { method, url } = req;
   const route = url.slice(1).split('/');
